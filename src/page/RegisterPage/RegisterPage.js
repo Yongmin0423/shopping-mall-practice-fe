@@ -111,6 +111,7 @@ const RegisterPage = () => {
             id="policy"
             onChange={handleChange}
             isInvalid={policyError}
+            checked={formData.policy}
           />
         </Form.Group>
         <Button variant="danger" type="submit">
