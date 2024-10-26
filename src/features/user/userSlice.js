@@ -30,7 +30,9 @@ export const loginWithGoogle = createAsyncThunk(
   async (token, { rejectWithValue }) => {}
 );
 
-export const logout = () => (dispatch) => {};
+export const logout = () => (dispatch) => {
+  dispatch(userSlice.actions.logout()); // user 상태를 null로 변경
+};
 export const registerUser = createAsyncThunk(
   "user/registerUser",
   async (
@@ -90,6 +92,9 @@ const userSlice = createSlice({
     clearErrors: (state) => {
       state.loginError = null;
       state.registrationError = null;
+    },
+    logout: (state) => {
+      state.user = null; // 로그아웃 시 user 상태를 null로 설정
     },
   },
   extraReducers: (builder) => {
