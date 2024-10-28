@@ -64,10 +64,15 @@ const NewItemDialog = ({ mode, showDialog, setShowDialog }) => {
   const handleSubmit = (event) => {
     event.preventDefault();
     //재고를 입력했는지 확인, 아니면 에러
+    if (stock.length === 0) return setStockError(true);
     // 재고를 배열에서 객체로 바꿔주기
+    const totalStock = stock.reduce((total, item) => {
+      return { ...total, [item[0]]: parseInt(item[1]) };
+    }, {});
     // [['M',2]] 에서 {M:2}로
     if (mode === "new") {
       //새 상품 만들기
+      dispatch(createProduct({ ...formData, stock: totalStock }));
     } else {
       // 상품 수정하기
     }
@@ -75,22 +80,38 @@ const NewItemDialog = ({ mode, showDialog, setShowDialog }) => {
 
   const handleChange = (event) => {
     //form에 데이터 넣어주기
+    const { id, value } = event.target; // id와 value를 추출
+    setFormData({ ...formData, [id]: value });
   };
 
   const addStock = () => {
     //재고타입 추가시 배열에 새 배열 추가
+    const newStock = [...stock, ["", 0]]; // 새로운 빈 재고 항목 추가
+    setStock(newStock);
   };
 
   const deleteStock = (idx) => {
     //재고 삭제하기
+    const newStock = stock.filter((item, index) => index !== idx); // stock에서 선택한 인덱스와 다른 인덱스 배열을 새로 만든다.
+    setStock(newStock);
   };
 
   const handleSizeChange = (value, index) => {
     //  재고 사이즈 변환하기
+    // 'value'는 선택된 사이즈
+    // 'index'는 업데이트할 재고 항목의 인덱스
+    const newStock = [...stock]; //기존 stock 배열 복사
+    newStock[index][0] = value; // 선택된 사이즈로 업데이트
+    setStock(newStock); // 업데이트된 배열로 상태 설정
   };
 
   const handleStockChange = (value, index) => {
     //재고 수량 변환하기
+    //'value'는 수량 값
+    //'index'는 업데이트할 재고 항목의 인덱스
+    const newStock = [...stock]; //기존 stock 배열 복사
+    newStock[index][1] = value; // 선택된 사이즈로 업데이트
+    setStock(newStock); // 업데이트된 배열로 상태 설정
   };
 
   const onHandleCategory = (event) => {
@@ -112,6 +133,7 @@ const NewItemDialog = ({ mode, showDialog, setShowDialog }) => {
 
   const uploadImage = (url) => {
     //이미지 업로드
+    setFormData({ ...formData, image: url });
   };
 
   return (
@@ -176,7 +198,7 @@ const NewItemDialog = ({ mode, showDialog, setShowDialog }) => {
           </Button>
           <div className="mt-2">
             {stock.map((item, index) => (
-              <Row key={index}>
+              <Row key={`${item[0]}-${index}`}>
                 <Col sm={4}>
                   <Form.Select
                     onChange={(event) =>
