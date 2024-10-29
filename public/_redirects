@@ -1,4 +1,4 @@
-/api/* https://noona-shopping-mall-yym.fly.dev/api/:splat 200
+/api/* https://be-local.fly.dev/api/:splat 200
 
 
 /*  /index.html  200
