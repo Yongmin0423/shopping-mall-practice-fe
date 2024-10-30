@@ -52,6 +52,7 @@ const AdminProductPage = () => {
   }, [searchQuery]);
 
   const deleteItem = (id) => {
+    dispatch(deleteProduct(id));
     //아이템 삭제하가ㅣ
   };
 
