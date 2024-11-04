@@ -85,7 +85,6 @@ const NewItemDialog = ({ mode, showDialog, setShowDialog }) => {
         })
       );
     }
-    setShowDialog(false);
   };
 
   const handleChange = (event) => {
