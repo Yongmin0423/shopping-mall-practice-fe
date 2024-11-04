@@ -7,6 +7,7 @@ import { currencyFormat } from "../../utils/number";
 import "./style/productDetail.style.css";
 import { getProductDetail } from "../../features/product/productSlice";
 import { addToCart } from "../../features/cart/cartSlice";
+import { showToastMessage } from "../../features/common/uiSlice";
 
 const ProductDetail = () => {
   const dispatch = useDispatch();
@@ -23,7 +24,15 @@ const ProductDetail = () => {
       setSizeError(true);
     }
     // 아직 로그인을 안한유저라면 로그인페이지로
-    if (!user) navigate("/login");
+    if (!user) {
+      dispatch(
+        showToastMessage({
+          message: "로그인이 필요합니다.",
+          status: "error",
+        })
+      );
+      return navigate("/login");
+    }
     // 카트에 아이템 추가하기
     dispatch(addToCart({ id, size }));
   };
