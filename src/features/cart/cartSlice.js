@@ -28,7 +28,7 @@ export const addToCart = createAsyncThunk(
     } catch (error) {
       dispatch(
         showToastMessage({
-          message: "카트에 아이템 추가가 실패했습니다.",
+          message: "이미 카트에 있는 아이템입니다.",
           status: "error",
         })
       );
@@ -120,8 +120,10 @@ const cartSlice = createSlice({
       .addCase(getCartList.fulfilled, (state, action) => {
         state.loading = false;
         state.error = "";
-        state.cartList = action.payload;
-        state.totalPrice = action.payload.reduce(
+        state.cartList = action.payload.filter((item) => item.productId); // productId가 null이 아닌 항목만 포함
+
+        // totalPrice 계산
+        state.totalPrice = state.cartList.reduce(
           (total, item) => total + item.productId.price * item.qty,
           0
         );
