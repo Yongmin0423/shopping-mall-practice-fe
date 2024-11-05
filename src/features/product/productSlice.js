@@ -132,6 +132,7 @@ const productSlice = createSlice({
       })
       .addCase(editProduct.pending, (state, action) => {
         state.loading = true;
+        state.success = false;
       })
       .addCase(editProduct.fulfilled, (state, action) => {
         state.loading = false;
