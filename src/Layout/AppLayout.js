@@ -16,8 +16,10 @@ const AppLayout = ({ children }) => {
   useEffect(() => {
     dispatch(loginWithToken());
   }, []);
+
   useEffect(() => {
     if (user) {
+      console.log("User logged in:", user); // user 상태 확인
       dispatch(getCartQty());
     }
   }, [user]);

@@ -5,6 +5,7 @@ import { useSearchParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getProductList } from "../../features/product/productSlice";
 import { Spinner } from "react-bootstrap";
+import { loginWithToken } from "../../features/user/userSlice";
 
 const LandingPage = () => {
   const dispatch = useDispatch();
@@ -13,6 +14,7 @@ const LandingPage = () => {
   const loading = useSelector((state) => state.product.loading); // loading 상태 가져오기
   const [query] = useSearchParams();
   const name = query.get("name");
+
   useEffect(() => {
     dispatch(
       getProductList({
