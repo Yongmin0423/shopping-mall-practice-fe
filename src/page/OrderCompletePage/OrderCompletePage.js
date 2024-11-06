@@ -25,7 +25,7 @@ const OrderCompletePage = () => {
         alt="greenCheck.png"
       />
       <h2>예약이 완료됬습니다!</h2>
-      <div>예약번호:하드코딩</div>
+      <div>예약번호:{orderNum}</div>
       <div>
         예약 확인은 내 예약 메뉴에서 확인해주세요
         <div className="text-align-center">
