@@ -51,13 +51,14 @@ const CartProductCard = ({ item }) => {
               defaultValue={item.qty}
               className="qty-dropdown"
             >
+              {/*아이템 개수만 노출되게 만들어주는 코드 *
               {[...Array(stockCount)].map((_, index) => (
                 <option key={index + 1} value={index + 1}>
                   {index + 1}
                 </option>
-              ))}
+              ))}*/}
 
-              {/*<option value={1}>1</option>
+              <option value={1}>1</option>
               <option value={2}>2</option>
               <option value={3}>3</option>
               <option value={4}>4</option>
@@ -66,7 +67,7 @@ const CartProductCard = ({ item }) => {
               <option value={7}>7</option>
               <option value={8}>8</option>
               <option value={9}>9</option>
-              <option value={10}>10</option>*/}
+              <option value={10}>10</option>
             </Form.Select>
           </div>
         </Col>
