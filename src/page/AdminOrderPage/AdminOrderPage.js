@@ -53,6 +53,10 @@ const AdminOrderPage = () => {
     dispatch(setSelectedOrder(order));
   };
 
+  const handleStatusSubmit = () => {
+    setSearchQuery((prevQuery) => ({ ...prevQuery, page: 1 }));
+  };
+
   const handlePageClick = ({ selected }) => {
     setSearchQuery({ ...searchQuery, page: selected + 1 });
   };
@@ -101,7 +105,13 @@ const AdminOrderPage = () => {
         />
       </Container>
 
-      {open && <OrderDetailDialog open={open} handleClose={handleClose} />}
+      {open && (
+        <OrderDetailDialog
+          open={open}
+          handleClose={handleClose}
+          handleStatusSubmit={handleStatusSubmit}
+        />
+      )}
     </div>
   );
 };

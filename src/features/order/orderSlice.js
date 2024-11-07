@@ -23,7 +23,6 @@ export const createOrder = createAsyncThunk(
       dispatch(getCartQty());
       return response.data.orderNum;
     } catch (error) {
-      console.log("showToastMessage 호출:", error.error); // 에러 메시지 로그 추가
       dispatch(showToastMessage({ message: error.error, status: "error" }));
       return rejectWithValue(error.error);
     }

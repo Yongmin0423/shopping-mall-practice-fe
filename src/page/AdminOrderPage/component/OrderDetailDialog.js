@@ -5,7 +5,7 @@ import { ORDER_STATUS } from "../../../constants/order.constants";
 import { currencyFormat } from "../../../utils/number";
 import { updateOrder } from "../../../features/order/orderSlice";
 
-const OrderDetailDialog = ({ open, handleClose }) => {
+const OrderDetailDialog = ({ open, handleClose, handleStatusSubmit }) => {
   const selectedOrder = useSelector((state) => state.order.selectedOrder);
   const [orderStatus, setOrderStatus] = useState(selectedOrder.status);
   const dispatch = useDispatch();
@@ -15,6 +15,7 @@ const OrderDetailDialog = ({ open, handleClose }) => {
   };
   const submitStatus = () => {
     dispatch(updateOrder({ id: selectedOrder._id, status: orderStatus }));
+    handleStatusSubmit();
     handleClose();
   };
 

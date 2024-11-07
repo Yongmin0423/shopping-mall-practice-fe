@@ -83,7 +83,12 @@ export const getCartQty = createAsyncThunk(
   "cart/getCartQty",
   async (_, { rejectWithValue, dispatch }) => {
     try {
-      const response = await api.get("/cart/qty");
+      const token = sessionStorage.getItem("token");
+      const response = await api.get("/cart/qty", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       if (response.status !== 200) throw new Error(response.error);
       return response.data.qty;
     } catch (error) {
