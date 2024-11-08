@@ -17,9 +17,6 @@ const OrderTable = ({ header, data, openEditForm }) => {
         <tbody>
           {data.length > 0 ? (
             data.map((item, index) => {
-              console.log("item.shipTo:", item.shipTo); // shipTo 값 확인
-              console.log("item", item);
-
               // shipTo를 JSON.parse로 파싱
               let shipTo = {};
               try {
