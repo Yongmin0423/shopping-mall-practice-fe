@@ -29,7 +29,7 @@ export const loginWithGoogle = createAsyncThunk(
   async (token, { rejectWithValue }) => {
     try {
       const response = await api.post("/auth/google", { token });
-      sessionStorage.setItem("token", token);
+      sessionStorage.setItem("token", response.data.token);
 
       return response.data.user;
     } catch (error) {
@@ -83,6 +83,44 @@ export const loginWithToken = createAsyncThunk(
       return response.data;
     } catch (error) {
       return rejectWithValue(error.error);
+    }
+  }
+);
+
+export const getUserInfo = createAsyncThunk(
+  "user/getUserInfo",
+  async (_, { getState, rejectWithValue }) => {
+    try {
+      const userId = getState().user.user._id;
+      const response = await api.get(`/user/${userId}`);
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
+  }
+);
+
+export const updateUserInfo = createAsyncThunk(
+  "user/updateUserInfo",
+  async ({ data, navigate }, { dispatch, rejectWithValue }) => {
+    try {
+      const response = await api.put("/user/update", data);
+      dispatch(
+        showToastMessage({
+          status: "success",
+          message: "정보 변경에 성고하였습니다.",
+        })
+      );
+      navigate("/");
+      return response.data;
+    } catch (error) {
+      dispatch(
+        showToastMessage({
+          status: "error",
+          message: error.message,
+        })
+      );
+      return rejectWithValue(error.message);
     }
   }
 );
@@ -143,6 +181,26 @@ const userSlice = createSlice({
       .addCase(loginWithGoogle.rejected, (state, action) => {
         state.loading = false;
         state.loginError = action.payload;
+      })
+      .addCase(getUserInfo.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(getUserInfo.fulfilled, (state, action) => {
+        state.loading = false;
+        state.userInfo = action.payload;
+      })
+      .addCase(getUserInfo.rejected, (state, action) => {
+        state.loading = false;
+      })
+      .addCase(updateUserInfo.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(updateUserInfo.fulfilled, (state, action) => {
+        state.loading = false;
+        state.userInfo = action.payload;
+      })
+      .addCase(updateUserInfo.rejected, (state, action) => {
+        state.loading = false;
       });
   },
 });

@@ -44,6 +44,7 @@ const Navbar = ({ user }) => {
     sessionStorage.removeItem("token");
     navigate("/");
   };
+
   return (
     <div>
       {showSearchBox && (
@@ -90,12 +91,24 @@ const Navbar = ({ user }) => {
         <div>
           <div className="display-flex">
             {user ? (
-              <div onClick={handleLogout} className="nav-icon">
-                <FontAwesomeIcon icon={faUser} />
-                {!isMobile && (
-                  <span style={{ cursor: "pointer" }}>로그아웃</span>
-                )}
-              </div>
+              <>
+                {/* 내 정보 버튼 */}
+                <div
+                  onClick={() => navigate(`/user/${user._id}`)}
+                  className="nav-icon"
+                >
+                  <FontAwesomeIcon icon={faUser} />
+                  {!isMobile && (
+                    <span style={{ cursor: "pointer" }}>내 정보</span>
+                  )}
+                </div>
+                <div onClick={handleLogout} className="nav-icon">
+                  <FontAwesomeIcon icon={faUser} />
+                  {!isMobile && (
+                    <span style={{ cursor: "pointer" }}>로그아웃</span>
+                  )}
+                </div>
+              </>
             ) : (
               <div onClick={() => navigate("/login")} className="nav-icon">
                 <FontAwesomeIcon icon={faUser} />
@@ -139,7 +152,7 @@ const Navbar = ({ user }) => {
             </li>
           ))}
         </ul>
-        {!isMobile && ( // admin페이지에서 같은 search-box스타일을 쓰고있음 그래서 여기서 서치박스 안보이는것 처리를 해줌
+        {!isMobile && (
           <div className="search-box landing-search-box ">
             <FontAwesomeIcon icon={faSearch} />
             <input
