@@ -108,7 +108,7 @@ export const updateUserInfo = createAsyncThunk(
       dispatch(
         showToastMessage({
           status: "success",
-          message: "정보 변경에 성고하였습니다.",
+          message: "정보 변경에 성공하였습니다.",
         })
       );
       navigate("/");
